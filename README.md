@@ -57,3 +57,45 @@ git status
 ```bash
 git commit -m "commit message"
 ```
+6. git push: to push the changes to the remote repository.
+```bash
+git push origin main
+```
+
+## CREATING AN app.py FILE USING FLASK WHICH IS CONFIGURED ON BEHALF OF THE MODEL TO PREDICT THE HOUSE PRICES USING THE PICKEL FILE
+
+* once the app.py file is created we now download postman to test the api created using flask
+
+## downloading the postman from the link below
+[Postman](https://www.postman.com/downloads/)
+
+after downloading the postman if you want to learn about how postman test the api without any actual front end then see our Learning_Notes.md
+* now we test the app.py -> in terminal run the command :
+```bash
+python app.py
+```
+and in postman we test the api using the url : http://127.0.0.1:5000/predict_api
+```json
+{data:
+    {
+    "CRIM": 0.00632,
+    "ZN": 18.0,
+    "INDUS": 2.31,
+    "CHAS": 0.0,
+    "NOX": 0.538,
+    "RM": 6.575,
+    "AGE": 65.2,
+    "DIS": 4.09,
+    "RAD": 1.0,
+    "TAX": 296.0,
+    "PTRATIO": 15.3,
+    "B": 396.9,
+    "LSTAT": 4.98
+    }
+}
+```
+
+
+### NOW PUSHING THE CODE TO GITHUB REPOSITORY -> Frequently we will be pushing the code to the github repository so that we can keep track of the changes made in the code and also we can revert back to the previous version of the code if needed.
+
+  
