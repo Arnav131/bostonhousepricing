@@ -107,9 +107,55 @@ and in postman we test the api using the url : http://127.0.0.1:5000/predict_api
 
 
 # **WE WILL USE THREE DEPLOYEMENT METHODS**
-    1. Deploying the app on heroku
+    1. Deploying the app on heroku ### this is not free now so we will not be using this method ###
     2. Deploying using docker
-    3. Deploying using Github CI/CD pipeline
+    3. Deploying using Github_Actions (Github CI/CD pipeline).
 
-## **DEPLOYING THE APP ON HEROKU**
-    Deploting the application on the heroku require prop file
+## **DEPLOYING THE APP ON RENDER**
+    Deploting the application on the Render
+    Go to Render.com and create a free account.
+
+1. Click the New + button in the dashboard and select Web Service.
+
+2. Connect your GitHub account and select your repository from the list.
+
+3. Fill out the configuration settings:
+
+     Application Name: A unique name for your application.
+
+     Region: Choose the region closest to you or your users.
+
+     Branch: main (or your default branch).
+
+     Runtime: Python
+
+     Build Command: pip install -r requirements.txt
+
+    Start Command: This depends on your specific Python framework (e.g., gunicorn app:app).
+
+4. Scroll down, select the Free instance type, and click Deploy Web Service.
+
+## **DEPLOYING THE APP USING DOCKER**
+    1. Create a dockerfile in the root directory of the project.
+    2. Write the following code in the dockerfile.
+    ```dockerfile
+    # Use an official Python runtime as a parent image
+    FROM python:3.8-slim
+
+    # Set the working directory in the container
+    WORKDIR /app
+
+    # Copy the current directory contents into the container at /app
+    COPY . /app
+
+    # Install any needed packages specified in requirements.txt
+    RUN pip install --no-cache-dir -r requirements.txt
+
+    # Make port 5000 available to the world outside this container
+    EXPOSE 5000
+
+    # Define environment variable
+    ENV NAME World
+
+    # Run app.py when the container launches
+    CMD ["python", "app.py"]
