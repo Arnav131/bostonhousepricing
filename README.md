@@ -106,7 +106,10 @@ and in postman we test the api using the url : http://127.0.0.1:5000/predict_api
 
 
 
+# **WE WILL USE THREE DEPLOYEMENT METHODS**
+    1. Deploying the app on heroku
+    2. Deploying using docker
+    3. Deploying using Github CI/CD pipeline
 
-
-# **DEPLOYING THE APP ON HEROKU**
+## **DEPLOYING THE APP ON HEROKU**
     Deploting the application on the heroku require prop file
