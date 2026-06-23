@@ -33,6 +33,15 @@ def predict_api():
     return jsonify(output[0])
 
 
+@app.route('/predict' ,  methods=['POST']) ## post means some sort of request given from the user side and ans is given to user via an api call
+def predict():
+    data = [float(x) for x in request.form.values()]
+    final_imput = scaler.transform(np.array(data).reshape(1,-1))
+    print(final_imput)
+    output = regmodel.predict(final_imput)[0]
+    return render_template("home.html" , prediction_text = "The House Price Prediction is{}".format(output))
+
+
 
 #now to test the api we have to run the flask app and we can do that by running the command flask run in the terminal and then we can use postman to test the.
 if __name__ == "__main__":

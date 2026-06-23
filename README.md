@@ -98,4 +98,8 @@ and in postman we test the api using the url : http://127.0.0.1:5000/predict_api
 
 ### NOW PUSHING THE CODE TO GITHUB REPOSITORY -> Frequently we will be pushing the code to the github repository so that we can keep track of the changes made in the code and also we can revert back to the previous version of the code if needed.
 
-  
+
+
+
+
+# Now since our app.py is working and tested under postman , no we will code a basic fronend using html and css.
