@@ -149,13 +149,21 @@ and in postman we test the api using the url : http://127.0.0.1:5000/predict_api
     COPY . /app
 
     # Install any needed packages specified in requirements.txt
-    RUN pip install --no-cache-dir -r requirements.txt
+    RUN pip install -r requirements.txt
 
     # Make port 5000 available to the world outside this container
-    EXPOSE 5000
-
-    # Define environment variable
-    ENV NAME World
+    EXPOSE $PORT
 
     # Run app.py when the container launches
-    CMD ["python", "app.py"]
+    CMD gunicorn --workers=1 --bind 0.0.0.0:$PORT app:app
+
+
+## After Docker is created in order to use github Actions we need to create a workflow file in the {.github/workflows} directory of the project.
+
+we will create a file named {render.yml} in the {.github/workflows} directory of the project and write the following code in it.
+
+```yaml
+
+
+
+### Github Actions CI/CD pipeline is used to automate the deployement to the render everytime we push the code {any changes or updates} to the github repository. <mark> if you want to learn more about how  github actions work then see our Learning_Notes.md file</mark>

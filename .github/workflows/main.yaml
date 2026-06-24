@@ -1,0 +1,68 @@
+# Your workflow name.
+name: Deploy to Render
+
+# Run workflow on every push to main branch.
+on:
+  push:
+    branches: [main]
+
+# Environment variables for your Docker Image
+env:
+  REGISTRY: ghcr.io
+  # This automatically grabs your GitHub username/repository-name
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-push-and-release:
+    runs-on: ubuntu-latest
+    
+    # Required permissions for GitHub Actions to push to your repository's registry
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # Check-out your repository.
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      ### ⬇ IMPORTANT PART 1: Build & Push ⬇ ###
+      
+      - name: Log in to the GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          # You DO NOT need to create this secret, GitHub provides it automatically
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: type=raw,value=latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          # You can set this to false to test the build before actually pushing
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # Optional: "--no-cache" equivalent in modern build-push-action
+          pull: true 
+          
+      ### ⬆ IMPORTANT PART 1: Build & Push ⬆ ###
+
+      ### ⬇ IMPORTANT PART 2: Release to Render ⬇ ###
+      
+      - name: Trigger Render to Pull and Deploy New Image
+        # Because Render doesn't use a proprietary GitHub Action plugin, 
+        # the standard method is to hit their deployment API endpoint.
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }} \
+          -H "Accept: application/json"
+          
+      ### ⬆ IMPORTANT PART 2: Release to Render ⬆ ###
