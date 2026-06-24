@@ -1,83 +1,97 @@
-# bostonhousepricing
+<div align="center">
+  <h1>🏡 Boston House Pricing Prediction</h1>
+  <p>An End-to-End Machine Learning Project with Flask API and Web Interface</p>
 
+  [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+  [![Flask](https://img.shields.io/badge/Flask-2.0+-lightgrey.svg)](https://flask.palletsprojects.com/)
+  [![Docker](https://img.shields.io/badge/Docker-Enabled-blue.svg)](https://www.docker.com/)
+  [![scikit-learn](https://img.shields.io/badge/scikit--learn-Enabled-orange.svg)](https://scikit-learn.org/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+</div>
 
-### Boston House Pricing Prediction
+<br />
 
+## 📖 Overview
 
-### Software And Tools Requirements
-1. [Github Account](https://github.com/)
-2. [Heroku Account](https://www.heroku.com/)
-3. [VS Code IDE](https://code.visualstudio.com/)
-4. [GitCLI](https://git-scm.com/downloads)
-5. [Python](https://www.python.org/downloads/)
+The **Boston House Pricing Prediction** project is a comprehensive Machine Learning application that predicts the price of houses in Boston based on various features such as crime rate, number of rooms, and proximity to employment centers.
 
-### Create a new environment 
-```bash
-conda create -p venv python==3.8 -y
-conda activate venv/
-```
+The core of the project is a trained **Linear Regression model**, serialized and served via a **Flask API**. It provides both a programmatic API endpoint and a user-friendly Web UI.
 
-### Start writing the code
-requirements.txt file to install all the dependencies
-```bash
-pip install -r requirements.txt
-```
-### Setting up the GIT
-* every code we write over here will be pushed to the github repository. So, we need to set up the git in our local machine.
-1. setting email in gitCL: 
-```bash
-git config --global user.email "your_email@example.com"
-```
-2. setting name in gitCL: 
-```bash
-git config --global user.name "Your Name"
-```
-3. setting default branch name in gitCL: 
-```bash
-git config --global init.defaultBranch main
-```
-### Some basic git commands
-1. git init: to initialize the git repository in our local machine.
-```bash
-git init
-```
-2. to add only specific files to the staging area.
-```bash
-git add <file_name>
-```
-3. git add: to add all the files to the staging area.
-```bash 
-git add .
-```
-4. To check the status of the files in the staging area.
-```bash
-git status
-```
-5. git commit: to commit the changes to the local repository.
-```bash
-git commit -m "commit message"
-```
-6. git push: to push the changes to the remote repository.
-```bash
-git push origin main
-```
+---
 
-## CREATING AN app.py FILE USING FLASK WHICH IS CONFIGURED ON BEHALF OF THE MODEL TO PREDICT THE HOUSE PRICES USING THE PICKEL FILE
+## ✨ Key Features
 
-* once the app.py file is created we now download postman to test the api created using flask
+- **Robust ML Model**: Predicts house prices utilizing multiple features mapped to a pre-trained model.
+- **RESTful API**: Allows external services to interact with the prediction engine via JSON payloads.
+- **Web Interface**: A clean HTML/CSS frontend to input data manually and instantly see the predicted price.
+- **Dockerized**: Fully containerized using Docker for seamless cross-platform deployment.
+- **CI/CD Integrated**: Configured with GitHub Actions for automated deployment to cloud platforms like Render.
 
-## downloading the postman from the link below
-[Postman](https://www.postman.com/downloads/)
+---
 
-after downloading the postman if you want to learn about how postman test the api without any actual front end then see our Learning_Notes.md
-* now we test the app.py -> in terminal run the command :
-```bash
-python app.py
-```
-and in postman we test the api using the url : http://127.0.0.1:5000/predict_api
+## 🛠️ Tech Stack
+
+- **Machine Learning**: `scikit-learn`, `numpy`, `pandas`
+- **Backend Framework**: `Flask`, `gunicorn`
+- **Frontend**: HTML, CSS, Jinja2 Templates
+- **Containerization**: `Docker`
+- **Deployment**: Render, GitHub Actions
+
+---
+
+## 🚀 Getting Started
+
+Follow these steps to set up the project locally on your machine.
+
+### Prerequisites
+
+Ensure you have the following installed:
+- [Python 3.8+](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/downloads)
+- [Docker](https://www.docker.com/products/docker-desktop/) (optional, for containerized run)
+
+### Local Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Arnav131/bostonhousepricing.git
+   cd bostonhousepricing
+   ```
+
+2. **Create a virtual environment**
+   ```bash
+   conda create -p venv python=3.8 -y
+   conda activate venv/
+   # Or using venv: python -m venv venv && source venv/bin/activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the application**
+   ```bash
+   python app.py
+   ```
+   The application will be accessible at `http://127.0.0.1:5000/`.
+
+---
+
+## 🔌 API Reference
+
+You can test the programmatic endpoints using tools like [Postman](https://www.postman.com/downloads/) or `curl`.
+
+### **Predict Price**
+
+- **URL:** `/predict_api`
+- **Method:** `POST`
+- **Content-Type:** `application/json`
+
+**Request Body:**
 ```json
-{data:
-    {
+{
+  "data": {
     "CRIM": 0.00632,
     "ZN": 18.0,
     "INDUS": 2.31,
@@ -91,79 +105,77 @@ and in postman we test the api using the url : http://127.0.0.1:5000/predict_api
     "PTRATIO": 15.3,
     "B": 396.9,
     "LSTAT": 4.98
-    }
+  }
 }
 ```
 
+**Response:**
+```json
+24.02031
+```
+*(The response represents the predicted price in $1000s)*
 
-### NOW PUSHING THE CODE TO GITHUB REPOSITORY -> Frequently we will be pushing the code to the github repository so that we can keep track of the changes made in the code and also we can revert back to the previous version of the code if needed.
+---
 
+## 🐳 Deployment Methods
 
+### 1. Deploying via Docker
 
+To run the application inside a Docker container:
 
+1. **Build the Docker Image**
+   ```bash
+   docker build -t boston-house-pricing .
+   ```
 
-# Now since our app.py is working and tested under postman , no we will code a basic fronend using html and css.
+2. **Run the Docker Container**
+   ```bash
+   docker run -p 5000:5000 boston-house-pricing
+   ```
 
+### 2. Deploying to Render (with CI/CD)
 
+This project contains a GitHub Actions workflow `.github/workflows/render.yml` to automatically deploy the application.
 
-# **WE WILL USE THREE DEPLOYEMENT METHODS**
-    1. Deploying the app on heroku ### this is not free now so we will not be using this method ###
-    2. Deploying using docker
-    3. Deploying using Github_Actions (Github CI/CD pipeline).
+1. Create a free account on [Render.com](https://render.com/).
+2. Create a new **Web Service** and connect this GitHub repository.
+3. Configuration settings:
+   - **Environment:** Docker (or Python with Start Command: `gunicorn --workers=1 --bind 0.0.0.0:$PORT app:app`)
+4. Upon every push to the `main` branch, the GitHub Actions pipeline will seamlessly deploy the latest version.
 
-## **DEPLOYING THE APP ON RENDER**
-    Deploting the application on the Render
-    Go to Render.com and create a free account.
+---
 
-1. Click the New + button in the dashboard and select Web Service.
+## 📁 Project Structure
 
-2. Connect your GitHub account and select your repository from the list.
+```text
+bostonhousepricing/
+│
+├── .github/workflows/           # CI/CD pipelines
+├── templates/                   # HTML Templates (home.html)
+├── app.py                       # Main Flask Application
+├── Dockerfile                   # Instructions for containerization
+├── requirements.txt             # Python dependencies
+├── regmodel.pkl                 # Pre-trained ML model
+├── scaling.pkl                  # Scaler for data standardization
+├── Linear_Regression_ML_Project.ipynb # Jupyter Notebook for ML Training
+└── README.md                    # Project Documentation
+```
 
-3. Fill out the configuration settings:
+---
 
-     Application Name: A unique name for your application.
+## 🤝 Contributing
 
-     Region: Choose the region closest to you or your users.
+Contributions, issues, and feature requests are welcome! 
+Feel free to check out the [issues page](https://github.com/Arnav131/bostonhousepricing/issues).
 
-     Branch: main (or your default branch).
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-     Runtime: Python
+---
 
-     Build Command: pip install -r requirements.txt
+## 📄 License
 
-    Start Command: This depends on your specific Python framework (e.g., gunicorn app:app).
-
-4. Scroll down, select the Free instance type, and click Deploy Web Service.
-
-## **DEPLOYING THE APP USING DOCKER**
-    1. Create a dockerfile in the root directory of the project.
-    2. Write the following code in the dockerfile.
-    ```dockerfile
-    # Use an official Python runtime as a parent image
-    FROM python:3.8-slim
-
-    # Set the working directory in the container
-    WORKDIR /app
-
-    # Copy the current directory contents into the container at /app
-    COPY . /app
-
-    # Install any needed packages specified in requirements.txt
-    RUN pip install -r requirements.txt
-
-    # Make port 5000 available to the world outside this container
-    EXPOSE $PORT
-
-    # Run app.py when the container launches
-    CMD gunicorn --workers=1 --bind 0.0.0.0:$PORT app:app
-
-
-## After Docker is created in order to use github Actions we need to create a workflow file in the {.github/workflows} directory of the project.
-
-we will create a file named {render.yml} in the {.github/workflows} directory of the project and write the following code in it.
-
-```yaml
-
-
-
-### Github Actions CI/CD pipeline is used to automate the deployement to the render everytime we push the code {any changes or updates} to the github repository. <mark> if you want to learn more about how  github actions work then see our Learning_Notes.md file</mark>
+This project is licensed under the [MIT License](LICENSE) - see the `LICENSE` file for details.
